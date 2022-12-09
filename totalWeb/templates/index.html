@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <title>News Analisys</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <style>
+    @font-face {
+      font-family: 'LeferiPoint-WhiteObliqueA';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/LeferiPoint-WhiteObliqueA.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      font-family: 'LeferiPoint-WhiteObliqueA';
+    }
+
+    .card {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container mt-3">
+    <h2>News Analisys</h2>
+    <p>
+    <div class="form-outline">
+      <textarea class="form-control" id="newsInput" rows="14" placeholder="기사내용을 입력하세요"></textarea>
+    </div>
+    </p>
+    <div id="accordion">
+      <div class="card">
+        <div class="card-header">
+          <div class="row justify-content-around">
+            <div class="col-10"><a class="btn" data-bs-toggle="collapse" href="#collapseOne">뉴스 요약</a></div>
+            <div class="col-1">
+              <div class="dropdown">
+                <button class="btn btn-success" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-three-dots" viewBox="0 0 16 16">
+                    <path
+                      d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                  </svg>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                  <li><a id="shortBtn" class="dropdown-item">요약</a></li>
+                  <li><a id="" class="dropdown-item">전송</a></li>
+                </ul>
+              </div>
+              <!-- <p class="text-end">
+                <button id="shortBtn" type="button" class="btn btn-success">실행</button>
+              </p> -->
+            </div>
+          </div>
+        </div>
+        <div id="collapseOne" class="collapse show" data-bs-parent="#accordion">
+          <div class="card-body">
+            <span id="shortResult"></span>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="row justify-content-around">
+            <div class="col-10"><a class="btn" data-bs-toggle="collapse" href="#collapseTwo">추천 종목</a></div>
+            <div class="col-1">
+              <button id="analisysBtn" type="button" class="btn btn-success">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd"
+                    d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div id="collapseTwo" class="collapse" data-bs-parent="#accordion">
+          <div class="card-body">
+            <span id="analisysResult"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    $('#shortBtn').on('click', () => {
+      $('#shortResult').text('')
+      let msg = $('#newsInput').val()
+      console.log(msg)
+      $('#newsInput').val('')
+
+      $.post({
+        url: '/short',
+        data: 'msg=' + msg,
+        dataType: 'json',
+        success: (res) => {
+          console.log('성공', res)
+          $('#shortResult').append(res.msg)
+        },
+        error: (err) => {
+          console.log('오류', err)
+        }
+      })
+
+    })
+
+    $('#analisysBtn').on('click', () => {
+      $('#analisysResult').text('')
+      let msg = $('#newsInput').val()
+      console.log(msg)
+
+      $.post({
+        url: '/analisys',
+        data: 'key=' + msg,
+        dataType: 'json',
+        success: (res) => {
+          console.log('성공', res)
+          $('#analisysResult').append(res.msg)
+        },
+        error: (err) => {
+          console.log('오류', err)
+        }
+      })
+    })
+  </script>
+
+</body>
+
+</html>
