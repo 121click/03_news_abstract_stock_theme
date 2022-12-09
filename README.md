@@ -1,5 +1,14 @@
 # news_category_analysis
 
+
+![image](https://user-images.githubusercontent.com/108212097/206660132-da0212f6-2b78-468a-aefb-e601099312ca.png)
+
+![image](https://user-images.githubusercontent.com/108212097/206660174-92bd694f-35bd-47e1-a2ed-46ea43e64536.png)
+
+![image](https://user-images.githubusercontent.com/108212097/206660221-a09340d8-de70-47a7-a1d3-166ff2837f82.png)
+
+
+
 ## Avatar
 - - -
 
